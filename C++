@@ -1,0 +1,79 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+class Student {
+private:
+    string name;
+    int rollNumber;
+    string grade;
+
+public:
+    Student(string name, int rollNumber, string grade) {
+        this->name = name;
+        this->rollNumber = rollNumber;
+        this->grade = grade;
+    }
+
+    void display() {
+        cout << "Name: " << name << endl;
+        cout << "Roll Number: " << rollNumber << endl;
+        cout << "Grade: " << grade << endl;
+    }
+
+    int getRollNumber() {
+        return rollNumber;
+    }
+};
+
+class School {
+private:
+    vector<Student> students;
+
+public:
+    void addStudent(string name, int rollNumber, string grade) {
+        Student newStudent(name, rollNumber, grade);
+        students.push_back(newStudent);
+    }
+
+    void removeStudent(int rollNumber) {
+        for (auto it = students.begin(); it != students.end(); ++it) {
+            if ((*it).getRollNumber() == rollNumber) {
+                students.erase(it);
+                cout << "Student with roll number " << rollNumber << " removed successfully." << endl;
+                return;
+            }
+        }
+        cout << "Student with roll number " << rollNumber << " not found." << endl;
+    }
+
+    void displayAllStudents() {
+        cout << "List of all students:" << endl;
+        for (const auto& student : students) {
+            student.display();
+            cout << endl;
+        }
+    }
+};
+
+int main() {
+    School school;
+
+  
+    school.addStudent("John Doe", 101, "A");
+    school.addStudent("Jane Smith", 102, "B");
+    school.addStudent("Alice Johnson", 103, "C");
+
+    // Displaying all students
+    school.displayAllStudents();
+
+    // Removing a student
+    school.removeStudent(102);
+
+    // Displaying all students again after removal
+    school.displayAllStudents();
+
+    return 0;
+}
